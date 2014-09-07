@@ -1,0 +1,12 @@
+{% extends 'djangopypi/base.html' %}
+{% block title %}Manage {{ release }}{% endblock %}
+{% block content %}
+<h1>Manage {{ release }}</h1>
+<div>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+</div>
+{% endblock %}

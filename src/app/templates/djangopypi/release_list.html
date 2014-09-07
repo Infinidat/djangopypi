@@ -1,0 +1,16 @@
+{% extends "base_site.html" %}
+
+{% block bread_crumbs_1 %}&raquo; Releases{% endblock %}
+
+{% block content %}
+<table><thead><th>Updated</th><th>Package</th><th>Summary</th></thead>
+<tbody>
+{% for release in release_list %}
+    <tr>
+        <td>{{ release.created|date:"Y-m-d" }}</td>
+        <td><a href="{{ release.get_absolute_url }}"/>{{ release }}</a></td>
+        <td>{{ release.summary|truncatewords:10 }}</td>
+    </tr>
+{% endfor %}
+</tbody></table>
+{% endblock %}

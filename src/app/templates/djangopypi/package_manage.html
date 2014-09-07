@@ -1,0 +1,15 @@
+{% extends "base_site.html" %}
+
+{% block bread_crumbs_1 %}
+	&raquo; <a href="{% url "djangopypi-package" package=package.name %}">{{ package }}</a>
+	&raquo; Manage
+{% endblock %}
+
+{% block content %}
+	<h1>Manage {{ package.name }}</h1>
+	<ul>
+		<form action="" method="post">
+		{{ form.as_p }}
+		<input type="submit" value="Submit" />
+	</ul>
+{% endblock content %}

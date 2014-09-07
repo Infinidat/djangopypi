@@ -1,0 +1,15 @@
+{% extends "base_site.html" %}
+
+{% block bread_crumbs_1 %}&raquo; Packages{% endblock %}
+
+{% block content %}
+<table><thead><th>Package</th><th>Description</th></thead>
+<tbody>
+{% for package in package_list %}
+    <tr>
+        <td><a href="{{ package.get_absolute_url }}"/>{{ package }}</a></td>
+        <td>{% if package.latest %}{{ package.latest.summary|truncatewords:10 }}{% endif %}</td>
+    </tr>
+{% endfor %}
+</tbody></table>
+{% endblock %}

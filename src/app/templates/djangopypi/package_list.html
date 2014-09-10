@@ -3,7 +3,7 @@
 {% block bread_crumbs_1 %}&raquo; Packages{% endblock %}
 
 {% block content %}
-<table><thead><th>Package</th><th>Description</th></thead>
+<table id="packages_table"><thead><th>Package</th><th>Description</th></thead>
 <tbody>
 {% for package in package_list %}
     <tr>
@@ -12,4 +12,9 @@
     </tr>
 {% endfor %}
 </tbody></table>
+<script>
+    $(function() {
+        $('#packages_table').dataTable({pageLength: 25});
+    });
+</script>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block bread_crumbs_1 %}&raquo; Releases{% endblock %}
 
 {% block content %}
-<table><thead><th>Updated</th><th>Package</th><th>Summary</th></thead>
+<table id="releases_table"><thead><th>Updated</th><th>Package</th><th>Summary</th></thead>
 <tbody>
 {% for release in release_list %}
     <tr>
@@ -13,4 +13,10 @@
     </tr>
 {% endfor %}
 </tbody></table>
+<script>
+    $(function() {
+        $('#releases_table').dataTable({pageLength: 25});
+    });
+</script>
+
 {% endblock %}

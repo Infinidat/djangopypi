@@ -89,6 +89,10 @@ class Package(models.Model):
         except Release.DoesNotExist:
             return None
 
+    def release_count(self):
+        return self.releases.count()
+
+
 class Release(models.Model):
     package = models.ForeignKey(Package, related_name="releases", editable=False)
     version = models.CharField(max_length=128, editable=False)
@@ -127,6 +131,9 @@ class Release(models.Model):
     def get_absolute_url(self):
         return ('djangopypi-release', (), {'package': self.package.name,
                                            'version': self.version})
+
+    def distribution_count(self):
+        return self.distributions.count()
 
 
 class Distribution(models.Model):

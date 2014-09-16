@@ -1,0 +1,30 @@
+{% extends 'djangopypi/base.html' %}
+{% block title %}{{ package.name }}{% endblock %}
+{% block extra_head %}<link rel="meta" title="DOAP" type="application/rdf+xml"
+    href="{% url "djangopypi-package-doap" package=package.name %}">{% endblock %}
+{% block content %}
+<h1>{{ package.name }}</h1>
+{% if not package.latest %}
+<div>No releases yet!</div>
+{% endif %}
+{% if package.latest %}
+{% with package.latest as release %}
+{% load safemarkup %}
+{{ release.description|saferst }}
+{% if release.distributions.count %}
+<h2>Downloads</h2>
+<ul>
+{% for dist in release.distributions.all %}
+    <li><a href="{{ dist.get_absolute_url }}">{{ dist }}</a>
+        {% if dist.content and dist.content.size %}
+            ({{ dist.content.size|filesizeformat }})
+        {% else %}
+            (file not found)
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% endif %}
+{% endblock %}

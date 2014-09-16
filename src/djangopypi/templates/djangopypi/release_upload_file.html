@@ -1,0 +1,10 @@
+{% extends 'djangopypi/base.html' %}
+{% block title %}Manage {{ release }} Files{% endblock %}
+{% block content %}
+<h1>Upload a File to {{ release }}</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div><input type="submit" value="Upload" /></div>
+</form>
+{% endblock %}

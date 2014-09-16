@@ -1,0 +1,10 @@
+{% extends 'djangopypi/base.html' %}
+{% block title %}Package Index{% endblock %}
+{% block content %}
+<h1>Package Index</h1>
+<ul>
+    {% for package in package_list %}
+    <li><a href="{{ package.get_absolute_url }}">{{ package.name }}</a>{% if package.latest and package.latest.summary %}: {{ package.latest.summary }}{% endif %}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

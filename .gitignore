@@ -1,9 +1,0 @@
-*.DS_Store
-*.pyc
-*~
-.*.sw[po]
-*.kpf
-/dist/
-/build/
-/*.egg-info
-/setuptools*

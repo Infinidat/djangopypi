@@ -42,13 +42,9 @@ def parse_distutils_request(request):
             header, content = part.lstrip().split('\n',1)
         except Exception, e:
             continue
-        
-        if content.startswith('\n'):
-            content = content[1:]
-        
-        if content.endswith('\n'):
-            content = content[:-1]
-        
+
+        content = content.strip()
+
         headers = parse_header(header)
         
         if "name" not in headers:

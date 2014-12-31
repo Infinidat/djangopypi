@@ -6,8 +6,10 @@ urlpatterns = patterns("djangopypi.views",
     url(r'^$', "root", name="djangopypi-root"),
     url(r'^packages/$','packages.index', name='djangopypi-package-index'),
     url(r'^simple/$','packages.simple_index', name='djangopypi-package-index-simple'),
+    url(r'^simple$','packages.simple_index', name='djangopypi-package-index-simple'),
     url(r'^search/$','packages.search',name='djangopypi-search'),  # FIXME
     url(r'^pypi/$', 'root', name='djangopypi-release-index'),
+    url(r'^pypi$', 'root', name='djangopypi-release-index'),
     url(r'^rss/$', ReleaseFeed(), name='djangopypi-rss'),
 
     url(r'^simple/(?P<package>[\w\d_\.\-]+)/$','packages.simple_details',

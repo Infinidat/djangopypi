@@ -51,7 +51,7 @@ def user_owns_package(login_url=None, redirect_field_name=REDIRECT_FIELD_NAME):
     if not login_url:
         from django.conf import settings
         login_url = settings.LOGIN_URL
-    
+
     def decorator(view_func):
         def _wrapped_view(request, package, *args, **kwargs):
             if request.user.packages_owned.filter(name=package).count() > 0:

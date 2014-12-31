@@ -75,20 +75,20 @@ def create_request(data):
 
 
 # class MockRequest(object):
-# 
+#
 #     def __init__(self, raw_post_data):
 #         self.raw_post_data = raw_post_data
 #         self.META = {}
-# 
-# 
+#
+#
 # class TestParseWeirdPostData(unittest.TestCase):
-# 
+#
 #     def test_weird_post_data(self):
 #         data = create_post_data("submit")
 #         raw_post_data = create_request(data)
 #         post, files = parse_distutils_request(MockRequest(raw_post_data))
 #         self.assertTrue(post)
-# 
+#
 #         for key in post.keys():
 #             if isinstance(data[key], list):
 #                 self.assertEquals(data[key], post.getlist(key))
@@ -100,39 +100,39 @@ def create_request(data):
 client = Client()
 
 class TestSearch(unittest.TestCase):
-    
+
     def setUp(self):
         self.dummy_user = User.objects.create(username='krill', password='12345',
                                  email='krill@opera.com')
         self.pkg = Package.objects.create(name='foo')
         self.pkg.owners.add(self.dummy_user)
-    
+
     def tearDown(self):
         self.pkg.delete()
         self.dummy_user.delete()
-    
+
     def test_search_for_package(self):
         response = client.post(reverse('djangopypi-search'), {'search_term': 'foo'})
         self.assertTrue("The quick brown fox jumps over the lazy dog." in response.content)
-        
+
 class TestSimpleView(unittest.TestCase):
-    
+
     def create_distutils_httprequest(self, user_data={}):
-        self.post_data = create_post_data(action='user')        
+        self.post_data = create_post_data(action='user')
         self.post_data.update(user_data)
         self.raw_post_data = create_request(self.post_data)
         request = HttpRequest()
         request.POST = self.post_data
         request.method = "POST"
         request.raw_post_data = self.raw_post_data
-        return request      
-        
-    # def test_user_registration(self):        
+        return request
+
+    # def test_user_registration(self):
     #     request = self.create_distutils_httprequest({'name': 'peter_parker', 'email':'parker@dailybugle.com',
     #                                                 'password':'spiderman'})
     #     response = simple(request)
     #     self.assertEquals(200, response.status_code)
-    #     
+    #
     # def test_user_registration_with_wrong_data(self):
     #     request = self.create_distutils_httprequest({'name': 'peter_parker', 'email':'parker@dailybugle.com',
     #                                                  'password':'',})
@@ -144,7 +144,7 @@ class XmlRpcClient(Client):
     def __init__(self, *args, **kwargs):
         self.extra_headers = {}
         super(XmlRpcClient, self).__init__(*args, **kwargs)
-    
+
     def putheader(self, key, value):
         self.extra_headers[key] = value
     def endheaders(self, request_body):
@@ -171,10 +171,10 @@ class ProxiedTransport(xmlrpclib.Transport):
         response = connection.post('/pypi/', request_body)
         data, methodname = xmlrpclib.loads(response)
         return data
-    
+
     def send_host(self, connection, host):
         pass
-    
+
     def send_user_agent(self, *args, **kwargs):
         pass
 
@@ -184,29 +184,29 @@ class TestXmlRpc(unittest.TestCase):
     """
     def setUp(self):
         from django.core.files.base import ContentFile
-        
+
         self.dummy_file = ContentFile("gibberish")
         self.dummy_user = User.objects.create(username='bobby', password='tables',
                                  email='bobby@tables.com')
         self.pkg = Package.objects.create(name='foo')
         self.pkg.owners.add(self.dummy_user)
         self.release = Release.objects.create(package=self.pkg, version="1.0")
-    
+
     def tearDown(self):
         self.release.delete()
         self.pkg.delete()
         self.dummy_user.delete()
-    
+
     def test_list_package(self):
         pypi = xmlrpclib.ServerProxy("http://localhost/pypi/", ProxiedTransport())
         pypi_hits = pypi.list_packages()
         expected = ['foo']
         self.assertEqual(pypi_hits, expected)
-    
+
     def test_package_releases(self):
         pypi = xmlrpclib.ServerProxy("http://localhost/pypi/", ProxiedTransport())
         pypi_hits = pypi.package_releases('foo')
         expected = ['1.0']
         self.assertEqual(pypi_hits, expected)
-    
-        
+
+

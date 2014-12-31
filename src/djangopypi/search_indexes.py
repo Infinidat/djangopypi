@@ -18,7 +18,7 @@ if 'haystack' in settings.INSTALLED_APPS:
                             model_attr='latest__summary')
         description = CharField(stored=False, null=True,
                                 model_attr='latest__description')
-        
+
         def prepare_author(self, obj):
             output = []
             for user in list(obj.owners.all()) + list(obj.maintainers.all()):
@@ -32,5 +32,5 @@ if 'haystack' in settings.INSTALLED_APPS:
                     if info.get(field):
                         output.append(info.get(field))
             return output
-    
+
     site.register(Package, PackageSearchIndex)

@@ -4,8 +4,8 @@ from django.conf import settings
 if not hasattr(settings,'DJANGOPYPI_ALLOW_VERSION_OVERWRITE'):
     settings.DJANGOPYPI_ALLOW_VERSION_OVERWRITE = False
 
-""" The upload_to argument for the file field in releases. This can either be 
-a string for a path relative to your media folder or a callable. For more 
+""" The upload_to argument for the file field in releases. This can either be
+a string for a path relative to your media folder or a callable. For more
 information, see http://docs.djangoproject.com/ """
 if not hasattr(settings,'DJANGOPYPI_RELEASE_UPLOAD_TO'):
     settings.DJANGOPYPI_RELEASE_UPLOAD_TO = 'dists'
@@ -86,12 +86,12 @@ if not hasattr(settings, 'DJANGOPYPI_METADATA_FORMS'):
         '1.2': Metadata12Form}
 
 if not hasattr(settings, 'DJANGOPYPI_FALLBACK_VIEW'):
-    from djangopypi.views import releases 
+    from djangopypi.views import releases
     settings.DJANGOPYPI_FALLBACK_VIEW = releases.index
 
 if not hasattr(settings,'DJANGOPYPI_ACTION_VIEWS'):
     from djangopypi.views import distutils
-    
+
     settings.DJANGOPYPI_ACTION_VIEWS = {
         "file_upload": distutils.register_or_upload, #``sdist`` command
         "submit": distutils.register_or_upload, #``register`` command
@@ -100,7 +100,7 @@ if not hasattr(settings,'DJANGOPYPI_ACTION_VIEWS'):
 
 if not hasattr(settings,'DJANGOPYPI_XMLRPC_COMMANDS'):
     from djangopypi.views import xmlrpc
-    
+
     settings.DJANGOPYPI_XMLRPC_COMMANDS = {
         'list_packages': xmlrpc.list_packages,
         'package_releases': xmlrpc.package_releases,
@@ -111,9 +111,9 @@ if not hasattr(settings,'DJANGOPYPI_XMLRPC_COMMANDS'):
         #'ratings': xmlrpc.ratings, Not done yet
     }
 
-""" These settings enable proxying of packages that are not in the local index 
-to another index, http://pypi.python.org/ by default. This feature is disabled 
-by default and can be enabled by setting DJANGOPYPI_PROXY_MISSING to True in 
+""" These settings enable proxying of packages that are not in the local index
+to another index, http://pypi.python.org/ by default. This feature is disabled
+by default and can be enabled by setting DJANGOPYPI_PROXY_MISSING to True in
 your settings file. """
 if not hasattr(settings, 'DJANGOPYPI_PROXY_BASE_URL'):
     settings.DJANGOPYPI_PROXY_BASE_URL = 'http://pypi.python.org'

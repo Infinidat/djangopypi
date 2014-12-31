@@ -25,13 +25,13 @@ def root(request, fallback_view=None, **kwargs):
         action = request.POST.get(':action','')
     else:
         action = request.GET.get(':action','')
-    
+
     if not action:
         log.debug('No action in root view')
         if fallback_view is None:
             fallback_view = settings.DJANGOPYPI_FALLBACK_VIEW
         return fallback_view(request, **kwargs)
-    
+
     if not action in settings.DJANGOPYPI_ACTION_VIEWS:
         log.error('Invalid action encountered: %s' % (action,))
         return HttpResponseNotAllowed(settings.DJANGOPYPI_ACTION_VIEW.keys())

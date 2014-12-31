@@ -61,7 +61,7 @@ ______________________________
 ------------------
 
 * Registering projects and uploading releases now requires authentication.
-* Every project now has an owner, so only the user registering the project can 
+* Every project now has an owner, so only the user registering the project can
   add releases.
 * md5sum is now properly listed in the release link.
 * Project names can now have dots ('.') in them.
@@ -72,7 +72,7 @@ ______________________________
 Backwards incompatible changes
 ______________________________
 
-* Projects now has an associated owner, so old projects must be exported and 
+* Projects now has an associated owner, so old projects must be exported and
   imported to a new database.
 
 0.1.0 (2009-03-22)

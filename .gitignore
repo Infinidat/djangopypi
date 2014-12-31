@@ -57,3 +57,5 @@ buildout.in
 
 src/djangopypi/__version__.py
 bootstrap.py
+devdatabase.db
+dists

@@ -20,7 +20,6 @@ ALREADY_EXISTS_FMT = _(
     "A file named '%s' already exists for %s. Please create a new release.")
 
 @basic_auth
-@transaction.commit_manually
 def register_or_upload(request):
     if request.method != 'POST':
         transaction.rollback()

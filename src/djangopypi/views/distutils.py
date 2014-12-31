@@ -13,6 +13,8 @@ from djangopypi.forms import PackageForm, ReleaseForm
 from djangopypi.models import Package, Release, Distribution, Classifier
 
 
+from django.utils.text import force_text, allow_lazy, six
+from django.core.files.storage import FileSystemStorage
 
 log = getLogger('djangopypi.views.distutils')
 
@@ -113,3 +115,25 @@ def list_classifiers(request, mimetype='text/plain'):
     response = HttpResponse(mimetype=mimetype)
     response.write(u'\n'.join(map(lambda c: c.name,Classifier.objects.all())))
     return response
+
+def get_valid_filename(s):
+    """
+    Returns the given string converted to a string that can be used for a clean
+    filename. Specifically, leading and trailing spaces are removed; other
+    spaces are converted to underscores; and anything that is not a unicode
+    alphanumeric, dash, underscore, or dot, is removed.
+    >>> get_valid_filename("john's portrait in 2004.jpg")
+    'johns_portrait_in_2004.jpg'
+    """
+    s = force_text(s).strip().replace(' ', '_')
+    return re.sub(r'(?u)[^-\w.\+]', '', s)
+
+get_valid_filename = allow_lazy(get_valid_filename, six.text_type)
+
+class FileSystemStorage_PEP440(FileSystemStorage):
+    def get_valid_name(self, name):
+        """
+        Returns a filename, based on the provided filename, that's suitable for
+        use in the target storage system.
+        """
+        return get_valid_filename(name)

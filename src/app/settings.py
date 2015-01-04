@@ -106,10 +106,15 @@ STATICFILES_FINDERS = (
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+import os
+DATABASE_FILEPATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                 os.pardir,
+                                                 os.pardir,
+                                                 'devdatabase.db'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'devdatabase.db',
+        'NAME': DATABASE_FILEPATH,
         'USER': '',
         'PASSWORD': '',
         'HOST': '',

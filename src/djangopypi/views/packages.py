@@ -30,18 +30,11 @@ simple_index = SimpleIndexView.as_view()
 
 
 def try_altenative_package_names(package):
-    try:
-        package = Package.objects.get(name__iexact=package).name
-    except:
-        pass
-    try:
-        package = Package.objects.get(name__iexact=package.replace('_', '-')).name
-    except:
-        pass
-    try:
-        package = Package.objects.get(name__iexact=package.replace('-', '_')).name
-    except:
-        pass
+    for k, v in [('', ''), ('_', '-'), ('-', '_'), (' ', '-'), (' ', '_')]:
+        try:
+            return Package.objects.get(name__iexact=package.replace(k, v)).name
+        except:
+            pass
     return package
 
 

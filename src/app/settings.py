@@ -139,7 +139,10 @@ DJANGOPYPI_ALLOW_VERSION_OVERWRITE = False
 DJANGOPYPI_RELEASE_UPLOAD_TO = 'dists'
 DJANGOPYPI_PROXY_MISSING = True # proxy missing [simple] packages to pypi.python.org/simple
 DEFAULT_FILE_STORAGE = 'djangopypi.views.distutils.FileSystemStorage_PEP440'
-MEDIA_ROOT = os.path.abspath(DJANGOPYPI_RELEASE_UPLOAD_TO)
+MEDIA_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                 os.pardir,
+                                                 os.pardir,
+                                                 'dists'))
 MEDIA_URL = '/media/'
 
 REGISTRATION_OPEN = True

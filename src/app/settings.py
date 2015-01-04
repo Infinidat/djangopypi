@@ -142,7 +142,7 @@ DEFAULT_FILE_STORAGE = 'djangopypi.views.distutils.FileSystemStorage_PEP440'
 MEDIA_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                                  os.pardir,
                                                  os.pardir,
-                                                 'dists'))
+                                                 'media'))
 MEDIA_URL = '/media/'
 
 REGISTRATION_OPEN = True

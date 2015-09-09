@@ -44,6 +44,11 @@ def details(request, package, simple=False, template='djangopypi/package_detail.
         p = get_object_or_404(Package, pk=package)
         return render(request, template, {'package': p}, content_type=content_type)
     except Http404, e:
+        try:
+            with open("/var/log/proxy.log", "a+") as fd:
+                fd.write('proxying %s\n' % package)
+        except (OSError, IOError) as e:
+            pass
         if settings.DJANGOPYPI_PROXY_MISSING:
             proxy_folder = 'simple' if simple else 'pypi'
             return HttpResponseRedirect('%s/%s/%s/' %

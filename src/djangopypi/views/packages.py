@@ -10,7 +10,7 @@ from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView
 
 from djangopypi.decorators import user_owns_package, user_maintains_package
-from djangopypi.models import Package, Release
+from djangopypi.models import Package, Release, normalize_name
 from djangopypi.forms import SimplePackageSearchForm, PackageForm
 
 
@@ -29,19 +29,9 @@ class SimpleIndexView(IndexView):
 simple_index = SimpleIndexView.as_view()
 
 
-def try_altenative_package_names(package):
-    for k, v in [('', ''), ('_', '-'), ('-', '_'), (' ', '-'), (' ', '_')]:
-        try:
-            return Package.objects.get(name__iexact=package.replace(k, v)).name
-        except:
-            pass
-    return package
-
-
 def details(request, package, simple=False, template='djangopypi/package_detail.html', content_type='text/html', **kwargs):
-    package = try_altenative_package_names(package)
     try:
-        p = get_object_or_404(Package, pk=package)
+        p = get_object_or_404(Package, normalized_name=normalize_name(package))
         return render(request, template, {'package': p}, content_type=content_type)
     except Http404, e:
         try:

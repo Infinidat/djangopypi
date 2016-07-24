@@ -1,4 +1,5 @@
 import os
+import re
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -6,6 +7,9 @@ import json
 from django.utils.datastructures import MultiValueDict
 from django.contrib.auth.models import User
 
+
+def normalize_name(name):
+    return re.sub(r"[-_.]+", "-", name).lower()
 
 
 class PackageInfoField(models.Field):
@@ -61,6 +65,7 @@ class Package(models.Model):
                                     related_name="packages_owned")
     maintainers = models.ManyToManyField(User, blank=True,
                                          related_name="packages_maintained")
+    normalized_name = models.CharField(max_length=255, editable=False, null=True)
 
     class Meta:
         verbose_name = _(u"package")
@@ -92,6 +97,9 @@ class Package(models.Model):
     def release_count(self):
         return self.releases.count()
 
+    def save(self, *args, **kwargs):
+        self.normalized_name = normalize_name(self.name)
+        return super(Package, self).save(*args, **kwargs)
 
 class Release(models.Model):
     package = models.ForeignKey(Package, related_name="releases", editable=False)

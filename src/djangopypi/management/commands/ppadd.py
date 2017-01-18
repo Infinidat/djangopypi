@@ -129,6 +129,8 @@ added"""
             dist = 'bdist_wininst'
         elif meta.filename.endswith('.egg'):
             dist = 'bdist_egg'
+        elif meta.filename.endswith('.whl'):
+            dist = 'bdist_wheel'
         elif meta.filename.endswith('.dmg'):
             dist = 'bdist_dmg'
         else:

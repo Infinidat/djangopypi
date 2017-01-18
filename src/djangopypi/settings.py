@@ -47,6 +47,7 @@ if not hasattr(settings,'DJANGOPYPI_DIST_FILE_TYPES'):
         ('bdist_rpm','RPM'),
         ('bdist_wininst','MS Windows installer'),
         ('bdist_egg','Python Egg'),
+        ('bdist_wheel','Python Wheel'),
         ('bdist_dmg','OS X Disk Image'),
     )
 

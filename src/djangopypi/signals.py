@@ -56,7 +56,18 @@ def distribution_hash(sender, instance, *args, **kwargs):
         except Exception:
             log.exception("Error calculating hash")
 
+def distribution_post_delete(sender, instance, *args, **kwargs):
+    instance.safe_remove()
+
+def distribution_pre_save(sender, instance, *args, **kwargs):
+    # django will save the file under a mangled name if it already exists
+    # so we have to make sure the file is not there before saving
+    instance.safe_remove()
+
+
 signals.post_save.connect(autohide_new_release_handler, sender=Release)
 signals.pre_save.connect(autohide_save_release_handler, sender=Release)
 signals.pre_save.connect(autohide_save_package_handler, sender=Package)
 signals.post_save.connect(distribution_hash, sender=Distribution)
+signals.pre_save.connect(distribution_pre_save, sender=Distribution)
+signals.post_delete.connect(distribution_post_delete, sender=Distribution)

@@ -176,6 +176,13 @@ class Distribution(models.Model):
     def get_absolute_url(self):
         return "%s#md5=%s" % (self.content.url, self.md5_digest)
 
+    def safe_remove(self):
+        full_path = os.path.join(settings.MEDIA_ROOT,
+                                 settings.DJANGOPYPI_RELEASE_UPLOAD_TO,
+                                 self.filename)
+        if os.path.exists(full_path):
+            os.remove(full_path)
+
     class Meta:
         verbose_name = _(u"distribution")
         verbose_name_plural = _(u"distributions")

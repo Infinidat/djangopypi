@@ -117,7 +117,7 @@ to another index, http://pypi.python.org/ by default. This feature is disabled
 by default and can be enabled by setting DJANGOPYPI_PROXY_MISSING to True in
 your settings file. """
 if not hasattr(settings, 'DJANGOPYPI_PROXY_BASE_URL'):
-    settings.DJANGOPYPI_PROXY_BASE_URL = 'http://pypi.python.org'
+    settings.DJANGOPYPI_PROXY_BASE_URL = 'https://pypi.python.org'
 
 if not hasattr(settings, 'DJANGOPYPI_PROXY_MISSING'):
     settings.DJANGOPYPI_PROXY_MISSING = False

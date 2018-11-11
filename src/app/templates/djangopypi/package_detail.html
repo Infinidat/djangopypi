@@ -5,7 +5,7 @@
 	href="{% url "djangopypi-package-doap" package=package.name %}"/>
 {% endblock %}
 
-{% block bread_crumbs_1 %}&raquo; {{ package }}{% endblock %}
+{% block bread_crumbs_1 %}<li>{{ package }}</li>{% endblock %}
 
 {% block content %}
 {% with package.latest as release %}

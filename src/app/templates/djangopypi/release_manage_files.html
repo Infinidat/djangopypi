@@ -1,9 +1,9 @@
 {% extends "base_site.html" %}
 
 {% block bread_crumbs_1 %}
-&raquo; <a href="{{ release.package.get_absolute_url }}">{{ release.package }}</a>
-&raquo; <a href="{{ release.get_absolute_url }}">{{ release }}</a>
-&raquo; Manage Files{% endblock %}
+<li><a href="{{ release.package.get_absolute_url }}">{{ release.package }}</a></li>
+<li><a href="{{ release.get_absolute_url }}">{{ release }}</a></li>
+<li>Manage Files</li>{% endblock %}
 
 {% block content %}
 <h1>Manage {{ release }} Files</h1>

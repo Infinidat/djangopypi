@@ -2,22 +2,6 @@
 
 {% block title %}PyPi{% endblock %}
 
-{% block bread_crumbs_1 %}
-&rsaquo; {{ title }}
-{% endblock %}
-{% block site_name_header %}
-PyPi
-<div style="font-size: 80%; display: inline-block; margin-left: 100px;">
-    <a href="{% url "djangopypi-release-index" %}">Releases</a>
-    |
-    <a href="{% url "djangopypi-package-index" %}">Packages</a>
-    |
-    <a href="{% url "djangopypi-package-index-simple" %}">Simple</a>
-    |
-    <a href="/admin/">Admin</a>
-</div>
-{% endblock %}
-
 {% block content_title %}{{ title }}{% endblock %}
 
 {% block nav-global %}{% endblock %}

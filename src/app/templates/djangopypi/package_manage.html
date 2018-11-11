@@ -1,8 +1,8 @@
 {% extends "base_site.html" %}
 
 {% block bread_crumbs_1 %}
-	&raquo; <a href="{% url "djangopypi-package" package=package.name %}">{{ package }}</a>
-	&raquo; Manage
+	<li><a href="{% url "djangopypi-package" package=package.name %}">{{ package }}</a></li>
+	<li>Manage</li>
 {% endblock %}
 
 {% block content %}

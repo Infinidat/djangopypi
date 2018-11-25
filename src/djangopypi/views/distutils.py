@@ -54,8 +54,8 @@ def register_or_upload(request):
 
     if not metadata_version in settings.DJANGOPYPI_METADATA_FIELDS:
         transaction.rollback()
-        return HttpResponseBadRequest('Metadata version must be one of: %s'
-                                      (', '.join(settings.DJANGOPYPI_METADATA_FIELDS.keys()),))
+        return HttpResponseBadRequest('Metadata version must be one of: %s' % (
+                                      ', '.join(settings.DJANGOPYPI_METADATA_FIELDS.keys()),))
 
     release, created = Release.objects.get_or_create(package=package,
                                                      version=version)

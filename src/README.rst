@@ -2,7 +2,7 @@ DjangoPyPI
 ==========
 
 DjangoPyPI is a Django application that provides a re-implementation of the
-`Python Package Index <http://pypi.python.org>`_.
+`Python Package Index <https://pypi.org>`_.
 
 Installation
 ------------

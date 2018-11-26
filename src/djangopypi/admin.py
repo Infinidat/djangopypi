@@ -19,7 +19,7 @@ class ReleaseAdmin(admin.ModelAdmin):
 
 class DistributionAdmin(admin.ModelAdmin):
 
-    list_display = ('release', 'created', 'filetype', 'md5_digest')
+    list_display = ('release', 'created', 'filetype', 'filename', 'md5_digest')
     search_fields = ('release__package__name', 'release__version')
     list_filter = ('created', 'filetype')
 

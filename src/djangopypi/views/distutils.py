@@ -10,8 +10,7 @@ from django.contrib.auth import login
 
 from djangopypi.decorators import basic_auth
 from djangopypi.forms import PackageForm, ReleaseForm
-from djangopypi.models import Package, Release, Distribution, Classifier
-
+from djangopypi.models import Package, Release, Distribution, Classifier, normalize_name
 
 from django.utils.text import force_text, allow_lazy, six
 from django.core.files.storage import FileSystemStorage
@@ -34,7 +33,7 @@ def register_or_upload(request):
         return HttpResponseBadRequest('No package name specified')
 
     try:
-        package = Package.objects.get(name=name)
+        package = Package.objects.get(normalized_name=normalize_name(name))
     except Package.DoesNotExist:
         package = Package.objects.create(name=name)
         package.owners.add(request.user)
@@ -54,8 +53,8 @@ def register_or_upload(request):
 
     if not metadata_version in settings.DJANGOPYPI_METADATA_FIELDS:
         transaction.rollback()
-        return HttpResponseBadRequest('Metadata version must be one of: %s'
-                                      (', '.join(settings.DJANGOPYPI_METADATA_FIELDS.keys()),))
+        return HttpResponseBadRequest('Metadata version must be one of: %s' % (
+                                      ', '.join(settings.DJANGOPYPI_METADATA_FIELDS.keys()),))
 
     release, created = Release.objects.get_or_create(package=package,
                                                      version=version)

@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block bread_crumbs_1 %}
-&raquo; <a href="{{ release.package.get_absolute_url }}">{{ release.package }}</a>
-&raquo; {{ release }}{% endblock %}
+<li><a href="{{ release.package.get_absolute_url }}">{{ release.package }}</a></li>
+<li>{{ release }}</li>{% endblock %}
 
 {% block content %}
 {% include "djangopypi/release_detail_content.html" %}

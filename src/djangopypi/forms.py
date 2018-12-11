@@ -67,6 +67,8 @@ class LinesField(forms.CharField):
         return map(lambda s: s.strip(),
                    super(LinesField, self).to_python(value).split('\n'))
 
+# https://github.com/pypa/twine/blob/0191a22a1ea51e4ff18fd20706094e03bb1abee4/twine/package.py#L99
+
 class Metadata10Form(forms.Form):
     platform = LinesField(required=False,
                           help_text=_(u'A comma-separated list of platform '
@@ -235,9 +237,25 @@ class Metadata12Form(Metadata10Form):
                                                     'dependency in the system '
                                                     'that the distribution is '
                                                     'to be used.'))
-    project_url = forms.CharField(required=False, widget=forms.Textarea(),
-                                  help_text=_(u'Each line is a string containing '
-                                              'a browsable URL for the project '
-                                              'and a label for it, separated '
-                                              'by a comma: "Bug Tracker, '
-                                              'http://bugs.project.com"'))
+
+    project_urls = forms.CharField(required=False, widget=forms.Textarea(),
+                                   help_text=_(u'Each line is a string containing '
+                                               'a browsable URL for the project '
+                                               'and a label for it, separated '
+                                               'by a comma: "Bug Tracker, '
+                                               'http://bugs.project.com"'))
+
+class Metadata21Form(Metadata12Form):
+    provides_extras = forms.CharField(required=False, widget=forms.Textarea(),
+                                      help_text=_(u'Each line is a a string containing '
+                                                  'the name of an optional feature. Must '
+                                                  'be a valid Python identifier. May be '
+                                                  'used to make a dependency conditional on '
+                                                  'whether the optional feature has been '
+                                                  'requested.'))
+
+    description_content_type = forms.CharField(required=False, widget=forms.Textarea(),
+                                               help_text=_(u'A string stating the markup syntax '
+                                                           '(if any) used in the distribution\'s '
+                                                           'description, so that tools can '
+                                                           'intelligently render the description.'))

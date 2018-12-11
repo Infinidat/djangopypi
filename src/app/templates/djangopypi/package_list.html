@@ -1,6 +1,6 @@
 {% extends "base_site.html" %}
 
-{% block bread_crumbs_1 %}&raquo; Packages{% endblock %}
+{% block bread_crumbs_1 %}<li>Packages</li>{% endblock %}
 
 {% block content %}
 <table id="packages_table"><thead><th>Package</th><th>Description</th></thead>
@@ -14,7 +14,7 @@
 </tbody></table>
 <script>
     $(function() {
-        $('#packages_table').dataTable({pageLength: 25});
+        $('#packages_table').dataTable({pageLength: 25, language: {search: "", searchPlaceholder: "Search"}});
     });
 </script>
 {% endblock %}

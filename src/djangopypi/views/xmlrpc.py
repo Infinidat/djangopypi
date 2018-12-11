@@ -83,7 +83,9 @@ def release_data(request, package_name, version):
         'requires_python': '',
         'obsoletes': '',
         'obsoletes_dist': '',
-        'project_url': '',
+        'project_urls': '',
+        'provides_extras': '',
+        'description_content_type': '',
     }
     try:
         release = Package.objects.get(name=package_name).releases.get(version=version)

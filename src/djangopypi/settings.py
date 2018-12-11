@@ -77,14 +77,21 @@ if not hasattr(settings, 'DJANGOPYPI_METADATA_FIELDS'):
                 'keywords','home_page','download_url','author','author_email',
                 'maintainer','maintainer_email','license','classifier',
                 'requires_dist','provides_dist','obsoletes_dist',
-                'requires_python','requires_external','project_url')}
+                'requires_python','requires_external','project_urls'),
+        '2.1': ('platform','supported_platform','summary','description',
+                'keywords','home_page','download_url','author','author_email',
+                'maintainer','maintainer_email','license','classifier',
+                'requires_dist','provides_dist','obsoletes_dist',
+                'requires_python','requires_external','project_urls',
+                'provides_extras', 'description_content_type')}
 
 if not hasattr(settings, 'DJANGOPYPI_METADATA_FORMS'):
-    from djangopypi.forms import Metadata10Form, Metadata11Form, Metadata12Form
+    from djangopypi.forms import Metadata10Form, Metadata11Form, Metadata12Form, Metadata21Form
     settings.DJANGOPYPI_METADATA_FORMS = {
         '1.0': Metadata10Form,
         '1.1': Metadata11Form,
-        '1.2': Metadata12Form}
+        '1.2': Metadata12Form,
+        '2.1': Metadata21Form}
 
 if not hasattr(settings, 'DJANGOPYPI_FALLBACK_VIEW'):
     from djangopypi.views import releases
@@ -113,11 +120,11 @@ if not hasattr(settings,'DJANGOPYPI_XMLRPC_COMMANDS'):
     }
 
 """ These settings enable proxying of packages that are not in the local index
-to another index, http://pypi.python.org/ by default. This feature is disabled
+to another index, https://pypi.org/ by default. This feature is disabled
 by default and can be enabled by setting DJANGOPYPI_PROXY_MISSING to True in
 your settings file. """
 if not hasattr(settings, 'DJANGOPYPI_PROXY_BASE_URL'):
-    settings.DJANGOPYPI_PROXY_BASE_URL = 'http://pypi.python.org'
+    settings.DJANGOPYPI_PROXY_BASE_URL = 'https://pypi.org'
 
 if not hasattr(settings, 'DJANGOPYPI_PROXY_MISSING'):
     settings.DJANGOPYPI_PROXY_MISSING = False

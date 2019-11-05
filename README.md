@@ -13,4 +13,5 @@ Run the following commands:
     easy_install -U infi.projector
     projector devenv build
     bin/manage syncdb
-    bin/manager runserver
+    bin/manage migrate
+    bin/manage runserver

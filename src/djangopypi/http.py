@@ -26,7 +26,7 @@ def parse_distutils_request(request):
     """
 
     try:
-        sep = request.body.splitlines()[1]
+        sep = request.body.lstrip().splitlines()[0]
     except:
         raise ValueError('Invalid post data')
 

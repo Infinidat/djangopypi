@@ -39,41 +39,44 @@ def parse_distutils_request(request):
 
     for part in filter(lambda e: e.strip(), request.body.split(sep)):
         try:
-            header, content = part.lstrip().split('\n',1)
-        except Exception, e:
+            header, content = part.lstrip().split('\r\n\r\n', 1)
+        except Exception:
             continue
 
         content = content.strip()
+        header_parts = get_content_disposition(header)
 
-        headers = parse_header(header)
-
-        if "name" not in headers:
+        if "name" not in header_parts:
             continue
 
-        if "filename" in headers:
-            dist = TemporaryUploadedFile(name=headers["filename"],
+        if "filename" in header_parts:
+            dist = TemporaryUploadedFile(name=header_parts["filename"],
                                          size=len(content),
                                          content_type="application/gzip",
                                          charset='utf-8')
             dist.write(content)
             dist.seek(0)
-            request.FILES.appendlist(headers['name'], dist)
+            request.FILES.appendlist(header_parts['name'], dist)
         else:
-            request.POST.appendlist(headers["name"],content)
+            request.POST.appendlist(header_parts["name"],content)
     return
 
-def parse_header(header):
-    headers = {}
-    for kvpair in filter(lambda p: p,
-                         map(lambda p: p.strip(),
-                             header.split(';'))):
-        try:
-            key, value = kvpair.split("=",1)
-        except ValueError:
-            continue
-        headers[key.strip()] = value.strip('"')
 
-    return headers
+def get_content_disposition(header):
+    for header in header.split('\r\n'):
+        header_type, header_content = header.split(';', 1)
+        if not header_type.startswith('Content-Disposition'):
+            continue
+
+        header_parts = {}
+        for item in header_content.split(';'):
+            item = item.strip()
+            try:
+                key, value = item.split("=", 1)
+            except ValueError:
+                continue
+            header_parts[key.strip()] = value.strip('"')
+        return header_parts
 
 
 def login_basic_auth(request):

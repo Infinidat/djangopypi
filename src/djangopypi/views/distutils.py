@@ -24,13 +24,15 @@ ALREADY_EXISTS_FMT = _(
 def register_or_upload(request):
     if request.method != 'POST':
         transaction.rollback()
-        return HttpResponseBadRequest('Only post requests are supported')
+        msg = 'Only post requests are supported'
+        return HttpResponseBadRequest(msg, reason=msg)
 
     name = request.POST.get('name',None).strip()
 
     if not name:
         transaction.rollback()
-        return HttpResponseBadRequest('No package name specified')
+        msg = 'No package name specified'
+        return HttpResponseBadRequest(msg, reason=msg)
 
     try:
         package = Package.objects.get(normalized_name=normalize_name(name))
@@ -42,19 +44,21 @@ def register_or_upload(request):
         request.user not in package.maintainers.all()):
 
         transaction.rollback()
-        return HttpResponseForbidden('You are not an owner/maintainer of %s' % (package.name,))
+        msg = 'You are not an owner/maintainer of %s' % (package.name,)
+        return HttpResponseForbidden(msg, reason=msg)
 
     version = request.POST.get('version',None).strip()
     metadata_version = request.POST.get('metadata_version', None).strip()
 
     if not version or not metadata_version:
         transaction.rollback()
-        return HttpResponseBadRequest('Release version and metadata version must be specified')
+        msg = 'Release version and metadata version must be specified'
+        return HttpResponseBadRequest(msg, reason=msg)
 
     if not metadata_version in settings.DJANGOPYPI_METADATA_FIELDS:
         transaction.rollback()
-        return HttpResponseBadRequest('Metadata version must be one of: %s' % (
-                                      ', '.join(settings.DJANGOPYPI_METADATA_FIELDS.keys()),))
+        msg = 'Metadata version must be one of: %s' % (', '.join(settings.DJANGOPYPI_METADATA_FIELDS.keys()),)
+        return HttpResponseBadRequest(msg, reason=msg)
 
     release, created = Release.objects.get_or_create(package=package,
                                                      version=version)
@@ -88,7 +92,8 @@ def register_or_upload(request):
         if os.path.basename(dist.content.name) == uploaded.name:
             """ Need to add handling optionally deleting old and putting up new """
             transaction.rollback()
-            return HttpResponseBadRequest('That file has already been uploaded...')
+            msg = 'That file has already been uploaded...'
+            return HttpResponseBadRequest(msg, reason=msg)
 
     md5_digest = request.POST.get('md5_digest','')
 
@@ -104,7 +109,8 @@ def register_or_upload(request):
     except Exception, e:
         transaction.rollback()
         log.exception('Failure when storing upload')
-        return HttpResponseServerError('Failure when storing upload')
+        msg = 'Failure when storing upload'
+        return HttpResponseServerError(msg, reason=msg)
 
     transaction.commit()
 
